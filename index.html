@@ -3,30 +3,92 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>純前端待辦清單</title>
+    <title>單字卡片學習</title>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <div class="app-shell">
       <header class="app-header">
-        <h1>我的待辦清單</h1>
-        <p>純 HTML / CSS / JS 前端應用程式</p>
+        <div>
+          <h1>單字卡片學習</h1>
+          <p>正面：英文單字 / 背面：中文釋義、詞性、例句、字根分析</p>
+        </div>
+        <nav class="tab-nav">
+          <button id="tab-card" class="tab-button active">卡片</button>
+          <button id="tab-manage" class="tab-button">管理</button>
+        </nav>
       </header>
 
-      <section class="task-form-panel">
-        <form id="task-form" autocomplete="off">
-          <input id="task-input" type="text" placeholder="輸入新的待辦事項..." />
-          <button type="submit">新增</button>
-        </form>
-        <div class="info-line">
-          <span id="task-count">目前沒有待辦事項</span>
-          <button id="clear-button" class="secondary-btn">清除已完成</button>
-        </div>
-      </section>
+      <main class="app-main">
+        <section id="card-view" class="view-panel active">
+          <div class="card-info">
+            <span id="current-word-index"></span>
+            <span id="word-count"></span>
+          </div>
+          <div class="card-stage" aria-label="單字卡片">
+            <div id="flash-card" class="flash-card">
+              <div class="card-face card-front">
+                <div class="face-title">英文單字</div>
+                <div id="card-word" class="word-large"></div>
+              </div>
+              <div class="card-face card-back">
+                <div class="face-title">中文釋義</div>
+                <div id="card-translation" class="word-text"></div>
+                <div class="word-meta">
+                  <p><strong>詞性：</strong><span id="card-pos"></span></p>
+                  <p><strong>例句：</strong><span id="card-example"></span></p>
+                  <p><strong>字根 / 分析：</strong><span id="card-root"></span></p>
+                </div>
+              </div>
+            </div>
+          </div>
 
-      <section class="task-list-panel">
-        <ul id="task-list" class="task-list"></ul>
-      </section>
+          <div class="card-actions">
+            <button id="prev-button" class="primary-btn">上一張</button>
+            <button id="flip-button" class="accent-btn">翻頁</button>
+            <button id="next-button" class="primary-btn">下一張</button>
+          </div>
+        </section>
+
+        <section id="manage-view" class="view-panel">
+          <div class="manage-panel">
+            <form id="word-form" autocomplete="off">
+              <h2>新增 / 編輯單字</h2>
+              <div class="form-grid">
+                <label>
+                  英文單字
+                  <input id="input-word" type="text" placeholder="enter" required />
+                </label>
+                <label>
+                  中文翻譯
+                  <input id="input-translation" type="text" placeholder="翻譯" required />
+                </label>
+                <label>
+                  詞性
+                  <input id="input-pos" type="text" placeholder="詞性，例如 noun / verb" />
+                </label>
+                <label>
+                  例句
+                  <input id="input-example" type="text" placeholder="例句" />
+                </label>
+                <label class="full-width">
+                  字根 / 分析
+                  <textarea id="input-root" rows="3" placeholder="字根、語源或詞彙分析"></textarea>
+                </label>
+              </div>
+              <div class="form-actions">
+                <button type="submit" class="primary-btn">儲存單字</button>
+                <button type="button" id="reset-button" class="secondary-btn">清除表單</button>
+              </div>
+            </form>
+
+            <div class="word-list-panel">
+              <h2>單字列表</h2>
+              <ul id="word-list" class="word-list"></ul>
+            </div>
+          </div>
+        </section>
+      </main>
     </div>
 
     <script src="script.js"></script>

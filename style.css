@@ -1,13 +1,14 @@
 :root {
-  --bg: #f5f7fb;
+  --bg: #eef4ff;
   --card: #ffffff;
   --text: #1c2236;
-  --muted: #657085;
+  --muted: #6f7a91;
   --primary: #4e8cff;
-  --accent: #38c172;
+  --accent: #7f5bff;
+  --secondary: #38c172;
   --danger: #ef5b5b;
-  --border: rgba(28, 34, 54, 0.08);
-  --shadow: 0 16px 40px rgba(28, 34, 54, 0.08);
+  --border: rgba(28, 34, 54, 0.12);
+  --shadow: 0 24px 60px rgba(28, 34, 54, 0.08);
 }
 
 * {
@@ -19,164 +20,355 @@ body {
   margin: 0;
   min-height: 100%;
   font-family: "Noto Sans TC", "Segoe UI", sans-serif;
-  background: radial-gradient(circle at top, #eef4ff 0%, var(--bg) 45%);
+  background: radial-gradient(circle at top, #f5f8ff 0%, var(--bg) 55%);
   color: var(--text);
 }
 
 body {
   display: flex;
   justify-content: center;
-  padding: 32px 16px;
+  padding: 28px 18px;
+}
+
+button,
+input,
+textarea {
+  font: inherit;
 }
 
 .app-shell {
-  width: min(760px, 100%);
+  width: min(980px, 100%);
   background: var(--card);
   border: 1px solid var(--border);
-  border-radius: 24px;
+  border-radius: 28px;
   box-shadow: var(--shadow);
   overflow: hidden;
 }
 
 .app-header {
-  padding: 32px 28px 24px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: center;
+  padding: 32px 34px 24px;
   border-bottom: 1px solid var(--border);
 }
 
 .app-header h1 {
   margin: 0 0 8px;
-  font-size: clamp(2rem, 3vw, 2.6rem);
+  font-size: clamp(2rem, 3vw, 2.8rem);
 }
 
 .app-header p {
   margin: 0;
   color: var(--muted);
+  max-width: 540px;
 }
 
-.task-form-panel {
-  padding: 24px 28px 0;
-}
-
-#task-form {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 12px;
-}
-
-#task-input {
-  width: 100%;
-  padding: 16px 18px;
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  font-size: 1rem;
-  outline: none;
-}
-
-#task-input:focus {
-  border-color: var(--primary);
-  box-shadow: 0 0 0 4px rgba(78, 140, 255, 0.12);
-}
-
-#task-form button {
-  padding: 0 20px;
-  min-width: 120px;
-  border: none;
-  border-radius: 14px;
-  background: var(--primary);
-  color: white;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: transform 0.2s ease, filter 0.2s ease;
-}
-
-#task-form button:hover {
-  transform: translateY(-1px);
-  filter: brightness(1.05);
-}
-
-.info-line {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 20px;
-  color: var(--muted);
-  font-size: 0.95rem;
-}
-
-.secondary-btn {
-  padding: 10px 18px;
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  background: white;
-  color: var(--text);
-  cursor: pointer;
-}
-
-.secondary-btn:hover {
-  background: #f7f9fc;
-}
-
-.task-list-panel {
-  padding: 18px 28px 28px;
-}
-
-.task-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: grid;
-  gap: 12px;
-}
-
-.task-item {
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  gap: 12px;
-  align-items: center;
-  padding: 16px 18px;
-  border: 1px solid var(--border);
-  border-radius: 18px;
-  background: #fff;
-}
-
-.task-item.completed .task-text {
-  color: var(--muted);
-  text-decoration: line-through;
-}
-
-.task-checkbox {
-  width: 20px;
-  height: 20px;
-  accent-color: var(--accent);
-  cursor: pointer;
-}
-
-.task-text {
-  margin: 0;
-  word-break: break-word;
-}
-
-.task-actions {
+.tab-nav {
   display: flex;
   gap: 10px;
 }
 
-.task-button {
+.tab-button {
+  border: 1px solid transparent;
+  background: #f7f9fc;
+  color: var(--text);
+  padding: 12px 18px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tab-button.active {
+  background: var(--primary);
+  color: white;
+  border-color: rgba(78, 140, 255, 0.2);
+}
+
+.tab-button:hover {
+  transform: translateY(-1px);
+}
+
+.app-main {
+  padding: 28px 34px 34px;
+}
+
+.view-panel {
+  display: none;
+}
+
+.view-panel.active {
+  display: block;
+}
+
+.card-info {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 20px;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.card-stage {
+  display: flex;
+  justify-content: center;
+  perspective: 1400px;
+  margin-bottom: 24px;
+}
+
+.flash-card {
+  width: min(520px, 100%);
+  min-height: 340px;
+  border-radius: 28px;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.8s ease;
+  box-shadow: 0 24px 70px rgba(28, 34, 54, 0.14);
+}
+
+.flash-card.flipped {
+  transform: rotateY(180deg);
+}
+
+.card-face {
+  position: absolute;
+  inset: 0;
+  padding: 32px 34px;
+  border-radius: inherit;
+  background: linear-gradient(180deg, #ffffff 0%, #f7faff 100%);
+  border: 1px solid rgba(78, 140, 255, 0.15);
+  backface-visibility: hidden;
+  display: grid;
+  gap: 18px;
+}
+
+.card-front {
+  justify-items: center;
+  align-content: center;
+}
+
+.card-back {
+  transform: rotateY(180deg);
+}
+
+.face-title {
+  color: var(--muted);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+}
+
+.word-large {
+  font-size: clamp(3rem, 6vw, 4.5rem);
+  font-weight: 700;
+  text-align: center;
+  letter-spacing: 0.03em;
+}
+
+.word-text {
+  font-size: 1.3rem;
+  line-height: 1.7;
+  margin-top: 8px;
+}
+
+.word-meta {
+  display: grid;
+  gap: 12px;
+  color: var(--text);
+}
+
+.word-meta p {
+  margin: 0;
+  line-height: 1.6;
+}
+
+.card-actions {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.primary-btn,
+.accent-btn,
+.secondary-btn {
+  border: none;
+  border-radius: 999px;
+  padding: 12px 20px;
+  cursor: pointer;
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.primary-btn {
+  background: var(--primary);
+  color: white;
+}
+
+.accent-btn {
+  background: var(--accent);
+  color: white;
+}
+
+.secondary-btn {
+  background: #f7f9fc;
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+
+.primary-btn:hover,
+.accent-btn:hover,
+.secondary-btn:hover,
+.tab-button:hover {
+  transform: translateY(-2px);
+}
+
+.manage-panel {
+  display: grid;
+  gap: 28px;
+}
+
+#word-form {
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 28px;
+  box-shadow: 0 16px 42px rgba(28, 34, 54, 0.07);
+}
+
+#word-form h2,
+.word-list-panel h2 {
+  margin-top: 0;
+  font-size: 1.4rem;
+}
+
+.form-grid {
+  display: grid;
+  gap: 18px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+label {
+  display: grid;
+  gap: 8px;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.full-width {
+  grid-column: 1 / -1;
+}
+
+input,
+textarea {
+  width: 100%;
+  padding: 14px 16px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+input:focus,
+textarea:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 4px rgba(78, 140, 255, 0.12);
+}
+
+.form-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.word-list-panel {
+  display: grid;
+  gap: 16px;
+}
+
+.word-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 14px;
+}
+
+.word-item {
+  display: grid;
+  gap: 14px;
+  padding: 22px 22px;
+  border: 1px solid var(--border);
+  border-radius: 22px;
+  background: #f9fbff;
+}
+
+.word-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.word-item-title {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.word-item-label {
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.word-item-details {
+  display: grid;
+  gap: 10px;
+  color: var(--text);
+}
+
+.word-item-details p {
+  margin: 0;
+  line-height: 1.6;
+}
+
+.word-item-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.word-item button {
   border: none;
   background: transparent;
-  color: var(--muted);
+  color: var(--primary);
   cursor: pointer;
-  font-size: 0.95rem;
-  padding: 6px 10px;
+  padding: 8px 12px;
   border-radius: 999px;
+  transition: background 0.2s ease;
 }
 
-.task-button:hover {
-  background: rgba(28, 34, 54, 0.06);
+.word-item button:hover {
+  background: rgba(78, 140, 255, 0.12);
 }
 
-.empty-state {
-  padding: 24px;
-  color: var(--muted);
-  text-align: center;
+@media (max-width: 720px) {
+  .app-header {
+    padding: 24px 20px 20px;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .card-stage {
+    margin-bottom: 20px;
+  }
+
+  .word-large {
+    font-size: 3rem;
+  }
 }
